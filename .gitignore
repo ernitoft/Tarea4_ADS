@@ -1,0 +1,5 @@
+#node_modules obtain by install
+node_modules
+
+#.env
+.env

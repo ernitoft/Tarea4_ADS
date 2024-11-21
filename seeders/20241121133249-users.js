@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const { faker } = require('@faker-js/faker');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -9,11 +10,12 @@ module.exports = {
     for (let i = 0; i < 51; i++) {
       const hashedPassword = await bcrypt.hash(faker.internet.password(12), saltRounds);
       usuarios.push({
-        nombre: faker.name.firstName().slice(0, 15), // Máximo 15 caracteres
-        correoElectronico: faker.internet.email(), // Email único generado por faker
-        apellidos: faker.name.lastName().slice(0, 100), // Máximo 100 caracteres
-        contraseña: hashedPassword, // Contraseña hasheada
-        estaEliminado: faker.datatype.boolean(), // Booleano aleatorio
+        id: uuidv4(),
+        nombre: faker.name.firstName().slice(0, 15),
+        correoElectronico: faker.internet.email(),
+        apellidos: faker.name.lastName().slice(0, 100),
+        contraseña: hashedPassword,
+        estaEliminado: faker.datatype.boolean(),
         createdAt: new Date(),
         updatedAt: new Date()
       });

@@ -1,24 +1,30 @@
 express = require('express');
 const logger = require('morgan');
 const sequelize= require('./database/database.js');
-
-
 const cors = require('cors');
 const User = require('./database/Users.js');
+const {generateToken, validateJWT} = require('../middleware/jwt.js');
+const fs = require('fs');
 
 class Server{
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
-
         this.Server = require('http').createServer(this.app);
-
         this.paths = {
-
+            users: '/api/users'
         };
         this.middlewares();
         this.dBConnection();
+        // this.createToken();
     }
+
+    async createToken(){
+        const token = await generateToken();
+        console.log('Token: ', token);
+
+    }
+
     async dBConnection(){
         try {
             await sequelize.authenticate();
@@ -45,7 +51,7 @@ class Server{
     }
 
     routes(){
-
+        this.app.use(this.paths.users, require((req, res, next) => validateJWT(req, res, next), '../routes/usersRoutes.js'));
     }
 
     listen(){
@@ -53,7 +59,6 @@ class Server{
             console.log('Servidor corriendo en puerto', this.port);
         })
     }
-
 }
 
 module.exports = Server;

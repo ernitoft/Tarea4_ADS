@@ -1,48 +1,55 @@
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('./database.js');
+const { v4: uuidv4 } = require('uuid');
 
 const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: () => uuidv4(), 
+        primaryKey: true,
+        allowNull: false,
+    },
     nombre: {
-        type: DataTypes.STRING(15), // Máximo 15 caracteres
+        type: DataTypes.STRING(15),
         allowNull: false,
         validate: {
-            notEmpty: true, // No puede estar vacío
-            len: [1, 15] // Longitud entre 1 y 15 caracteres
+            notEmpty: true, 
+            len: [1, 15] 
         }
     },
     correoElectronico: {
-        type: DataTypes.STRING(100), // Máximo 100 caracteres
+        type: DataTypes.STRING(100), 
         allowNull: false,
-        unique: true, // Campo único
+        unique: true, 
         validate: {
-            isEmail: true, // Valida formato de email
+            isEmail: true, 
             notEmpty: true
         }
     },
     apellidos: {
-        type: DataTypes.STRING(100), // Máximo 100 caracteres
+        type: DataTypes.STRING(100), 
         allowNull: false,
         validate: {
             notEmpty: true,
-            len: [1, 100] // Longitud entre 1 y 100 caracteres
+            len: [1, 100] 
         }
     },
     contraseña: {
-        type: DataTypes.STRING(255), // Almacena el hash (puede ser largo)
+        type: DataTypes.STRING(255), 
         allowNull: false,
         validate: {
             notEmpty: true,
-            len: [8, 30] // Contraseña entre 8 y 30 caracteres (antes de hashear)
+            len: [8, 30]
         }
     },
     estaEliminado: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false // Por defecto, no eliminado
+        defaultValue: false 
     }
 }, {
-    timestamps: true, // Incluye createdAt y updatedAt
-    paranoid: true, // Agrega soporte para "soft delete" si deseas usarlo
+    timestamps: true, 
+    paranoid: true, 
 });
 
 // Hook para hashear la contraseña antes de guardar el usuario
