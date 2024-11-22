@@ -16,6 +16,7 @@ class Server{
         };
         this.middlewares();
         this.dBConnection();
+        this.routes();
         // this.createToken();
     }
 
@@ -51,7 +52,8 @@ class Server{
     }
 
     routes(){
-        this.app.use(this.paths.users, require((req, res, next) => validateJWT(req, res, next), '../routes/usersRoutes.js'));
+        const userRoutes = require('../routes/usersRoutes.js');
+        this.app.use(this.paths.users, validateJWT, userRoutes);
     }
 
     listen(){
