@@ -2,7 +2,7 @@ express = require('express');
 const logger = require('morgan');
 const sequelize = require('./database/database.js');
 const cors = require('cors');
-const User = require('../models/database/Users.js');
+const User = require("../models/database/Users");
 const {generateToken, validateJWT} = require('../middleware/jwt.js');
 
 class Server{
