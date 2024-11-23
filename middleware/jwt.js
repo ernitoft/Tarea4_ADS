@@ -19,7 +19,9 @@ const validateJWT = async (req, res, next) => {
         if (!token) {
             return res.status(401).json({
                 error: true,
+                data: null,
                 msg: 'No se ha proporcionado un token de autenticación',
+                code: 401,
             });
         }
 
@@ -31,11 +33,15 @@ const validateJWT = async (req, res, next) => {
             return res.status(401).json({
                 error: true,
                 msg: 'Token expirado',
+                code: 401,
+                data: null,
             });
         }
         return res.status(401).json({
             error: true,
             msg: 'Token no válido',
+            code: 401,
+            data: null,
         });
     }
 };

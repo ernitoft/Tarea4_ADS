@@ -9,12 +9,13 @@ const { Router } = require('express');
 
 const router = Router();
 
-
 router.get('/', getAllUsers );
 
-router.post('/nuevo', createUser);
+router.get('/:id', getOneUser);
 
-router.put('/:id', updateUser);
+router.post('/', createUser);
+
+router.patch('/:id', updateUser);
 
 router.delete('/:id', deleteUser);
 
