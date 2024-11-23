@@ -8,7 +8,7 @@ const {generateToken, validateJWT} = require('../middleware/jwt.js');
 class Server{
     constructor(){
         this.app = express();
-        this.port = process.env.PORT;
+        this.port = process.env.PORT || 3000;
         this.Server = require('http').createServer(this.app);
         this.paths = {
             users: '/api/users'
