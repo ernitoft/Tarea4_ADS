@@ -1,10 +1,9 @@
 express = require('express');
 const logger = require('morgan');
-const sequelize= require('./database/database.js');
+const sequelize = require('./database/database.js');
 const cors = require('cors');
-const User = require('./database/Users.js');
+const User = require('../models/database/Users.js');
 const {generateToken, validateJWT} = require('../middleware/jwt.js');
-const fs = require('fs');
 
 class Server{
     constructor(){
